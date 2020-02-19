@@ -1,0 +1,21 @@
+﻿@page
+@model PaypalProject.Pages.SubscriptionCreateModel
+@{
+    ViewData["Title"] = "Create Subscription";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<form method="post">
+    <div class="form-group form-inline">
+        <label class="control-label">Plan ID:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.PlanId" style="width:270px" />
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Create Subscription</button>
+    </div>
+    @if (Model.CreateResult != null)
+    {
+        <p>Create Subscription: Status: @Model.CreateStatus, Id: @Model.SubscriptionId</p>
+        <textarea style="width:100%;height:200px">@Model.CreateResult</textarea>
+    }
+</form>

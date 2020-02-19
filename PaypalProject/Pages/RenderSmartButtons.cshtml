@@ -1,0 +1,19 @@
+﻿@page
+@model PaypalProject.Pages.RenderSmartButtonsModel
+@{
+    ViewData["Title"] = "Render Smart Buttons";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<div id="div_sbtn1"></div>
+<div id="div_sbtn2" style="width:50%;margin-top:30px"></div>
+<div id="div_sbtn3" style="width:20%;margin-top:30px"></div>
+
+@section Scripts{
+    <script>
+        paypal.Buttons().render('#div_sbtn1');
+        paypal.Buttons().render('#div_sbtn2');
+        paypal.Buttons().render('#div_sbtn3');
+    </script>
+}

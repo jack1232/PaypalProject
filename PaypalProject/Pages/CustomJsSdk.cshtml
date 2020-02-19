@@ -1,0 +1,33 @@
+﻿@page
+@model PaypalProject.Pages.CustomJsSdkModel
+@{
+    ViewData["Title"] = "Customize JavaScript SDK";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<h5>Change Curreny and Locale</h5>
+<br />
+<div class="row">
+    <div class="col-md-3" id="us">US: USD</div>
+    <div class="col-md-3" id="de">DE: EUR</div>
+    <div class="col-md-3" id="hk">HK, HKD</div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            let src0 = (document.getElementById('paypal_sdk').src);
+
+            document.getElementById('paypal_sdk').src = src0 + '&currency=USD&locale=en_US';
+            paypal.Buttons().render('#us');
+
+            document.getElementById('paypal_sdk').src = src0 + '&currency=EUR&locale=de_DE';
+            paypal.Buttons().render('#de');
+
+            document.getElementById('paypal_sdk').src = src0 + '&currency=HKD&locale=zh_HK';
+            paypal.Buttons().render('#hk');                    
+        });
+    </script>
+}

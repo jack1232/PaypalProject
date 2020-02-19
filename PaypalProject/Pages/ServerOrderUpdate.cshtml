@@ -1,0 +1,28 @@
+﻿@page
+@model PaypalProject.Pages.ServerOrderUpdateModel
+@{
+    ViewData["Title"] = "Update Order";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<form method="post">
+    <div class="form-group form-inline">
+        <input class="form-control ml-2" type="hidden" asp-for="@Model.OriginalResult" />
+        <label class="control-label">Order ID:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.OrderId" />
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Update Order</button>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-6">
+        <h5>Original Order:</h5>
+        <textarea style="width:100%;height:500px">@Model.OriginalResult</textarea>
+    </div>
+    <div class="col-md-6">
+        <div class="d-lg-inline-flex"><h5>Updated Order:</h5> <span class="ml-4">@Model.Status</span></div>        
+        <textarea style="width:100%;height:500px">@Model.UpdatedResult</textarea>
+    </div>
+</div>

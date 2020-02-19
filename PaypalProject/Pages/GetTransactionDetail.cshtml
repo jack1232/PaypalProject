@@ -1,0 +1,59 @@
+﻿@page
+@model PaypalProject.Pages.GetTransactionDetailModel
+@{
+    ViewData["Title"] = "Get Transaction Detail";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<div class="form-group form-inline">
+    <h5>Retrieve the order by passing the order ID.</h5>
+    <label class="control-label ml-4">Order ID:</label>
+    <input id="order_id" class="form-control ml-2" type="text" value="87T95659RK609312V" />
+    <button id="btn_get" class="btn btn-primary btn-sm ml-2">Get Order Info</button>
+</div>
+
+<br />
+<h5>Create a new order, and then pass the order ID to server.</h5>
+<p>
+    To get the correct order ID, you can use the createOrder function to create a new order
+    and then use the newly created order ID to retrive the order information from the server.
+</p>
+
+<div class="form-group form-inline">
+    <label class="control-label ml-4"><b>Is minimum order:</b></label>
+    <input id="is_mini_order" class="form-control ml-2" type="text" value="true"  style="width:80px"/>
+    <button id="btn_get_new" class="btn btn-primary btn-sm ml-2">Get New Order Info</button>
+</div>
+<hr />
+
+<h5>Results:</h5> 
+<textarea id="tx_result" style="width:100%;height:400px"></textarea>
+
+@section Scripts{
+    <script>
+        $('#btn_get').click(function () {
+            var id = $('#order_id').val();
+            fetch(`/api/getorder/${id}`)
+                    .then(function (res) {
+                        return res.json();
+                    }).then(function (details) {
+                        $('#tx_result').empty();
+                        $('#tx_result').html(JSON.stringify(details));
+                        console.log(JSON.stringify(details.purchase_units[0].payments.captures[0].id, null, 4));
+                    });
+        });
+
+        $('#btn_get_new').click(function () {
+            var isMini = $('#is_mini_order').val();
+            fetch(`/api/getneworder/${isMini}`)
+                    .then(function (res) {
+                        return res.json();
+                    }).then(function (details) {
+                        $('#tx_result').empty();
+                        $('#tx_result').html(JSON.stringify(details));
+                    });
+        });
+    </script>
+}

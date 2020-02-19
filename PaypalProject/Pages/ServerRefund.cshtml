@@ -1,0 +1,36 @@
+﻿@page
+@model PaypalProject.Pages.ServerRefundModel
+@{
+    ViewData["Title"] = "Refund from Server";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Refund using Capture ID:</h5>
+<form method="post">
+    <div class="form-group form-inline">
+        <label class="control-label ml-4">Cature ID:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.CaptureId" />
+        <label class="control-label ml-4">Amount:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.AmountCapture" style="width:80px" />
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Refund with Capture ID</button>
+    </div>
+</form>
+
+<br />
+<h5>Refund using Order ID:</h5>
+<form method="post" asp-page-handler="OrderId">
+    <div class="form-group form-inline">
+        <label class="control-label ml-4">Order ID:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.OrderId" />
+        <label class="control-label ml-4">Amount:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.AmountOrder" style="width:80px" />
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Refund with Order ID</button>
+    </div>
+</form>
+
+<br />
+<h5>Response from Server:</h5>
+<textarea style="width:100%;height:300px">@Model.Result</textarea>
+

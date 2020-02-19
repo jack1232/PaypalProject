@@ -1,0 +1,71 @@
+﻿@page
+@model PaypalProject.SubscriptionButtonModel
+@{
+    ViewData["Title"] = "Subscription with Smart Payment Buttons";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Create Product:</h5>
+<form method="post" asp-page-handler="Product">
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Create Product</button>
+    </div>
+</form>
+@if (!string.IsNullOrEmpty(Model.InputModel.ProductResult))
+{
+    <br />
+    <p>Create Produc: Status: @Model.InputModel.ProductStatus, Product ID: @Model.InputModel.ProductId</p>
+    <textarea style="width:100%;height:100px">@Model.InputModel.ProductResult</textarea>
+}
+
+<br />
+<br />
+<h5>Create Subscription Plan:</h5>
+<form method="post" asp-page-handler="Plan">
+    <input type="hidden" asp-for="@Model.InputModel.ProductResult" />
+    <input type="hidden" asp-for="@Model.InputModel.ProductStatus" />
+    <div class="form-group form-inline">
+        <label class="control-label ml-2">Product ID:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.InputModel.ProductId" />
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Create Plan</button>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.InputModel.PlanResult))
+{
+    <br />
+    <p>Create Plan: Status: @Model.InputModel.PlanStatus, Plan ID: @Model.InputModel.PlanId</p>
+
+    <textarea style="width:100%;height:200px">@Model.InputModel.PlanResult</textarea>
+}
+
+<br />
+<br />
+<h5>Log in to subscribe:</h5>
+<div id="div_paypal" style="width:20%;padding-left:10px"></div>
+
+@section Scripts{
+    <script>
+        let src0 = (document.getElementById('paypal_sdk').src);
+        document.getElementById('paypal_sdk').src = src0 + '&vault=true';
+
+        paypal.Buttons({
+            createSubscription: function (data, actions) {
+                return actions.subscription.create({
+                    'plan_id': '@Model.InputModel.PlanId',
+                    'quantity': "1"
+                });
+            },
+            onApprove: function (data, actions) {
+                console.log(JSON.stringify(data, null, 4));
+                alert('You have successfully created subscription ' + data.subscriptionID);
+            }
+        }).render('#div_paypal');
+    </script>
+}
+
+
+
+

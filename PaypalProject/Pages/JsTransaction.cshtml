@@ -1,0 +1,65 @@
+﻿@page
+@model PaypalProject.Pages.JsTransactionModel
+@{
+    ViewData["Title"] = "PayPal Transaction using JavaScript";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<h5>Transaction with minimal code:</h5>
+<div id="div_min" style="width:20%"></div>
+<br />
+
+<h5>Transaction with capture:</h5>
+<div id="div_capture" style="width:20%"></div>
+<br />
+<div id="buyer_info" style="display:none">
+    <p id="orderId"></p>
+    <p id="buyerId"></p>
+    <p id="buyerName"></p>
+    <p id="buyerEmail"></p>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        // Transaction with minimum code:
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '0.01'
+                        }
+                    }]
+                });
+            }
+        }).render('#div_min');
+
+        // Capture fund after transaction:
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '0.01'
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    $('#buyer_info').css('display', 'block');
+                    $('#orderId').html(`Order ID: ${ data.orderID }`);
+                    $('#buyerId').html(`Buyer ID: ${ data.payerID }`);
+                    $('#buyerName').html(`Buyer Name: ${ details.payer.name.given_name} ${ details.payer.name.surname}`);
+                    $('#buyerEmail').html(`Buyer Email" ${ details.payer.email_address }`);
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+        }).render('#div_capture');
+
+    </script>
+}
+

@@ -1,0 +1,54 @@
+﻿@page
+@model PaypalProject.Pages.ServerTransactionModel
+@{
+    ViewData["Title"] = "PayPal Transaction from Server";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+
+<h5>Transaction with minimum fields and payload:</h5>
+<br />
+<div id="div_min" style="width:20%"></div>
+
+<br />
+<div id="div_result"></div>
+
+@section Scripts{
+    <script>
+        paypal.Buttons({
+            createOrder: function () {
+                return fetch('/api/createminimumorder/capture/0.01', {
+                    method: 'post'
+                })
+                    .then(function (res) {
+                        return res.json();
+                    }).then(function (data) {
+                        return data.id;
+                    });
+            },
+            onApprove: function (data) {
+                return fetch(`/api/captureorder/${data.orderID}`, {
+                    method: 'post'
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (details) {
+                    $('#div_result').empty();
+                    $('#div_result').html(`
+                        <h5>Response result:</h5>
+                        <ul>
+                            <li>Status: ${details.status}</li>
+                            <li>Intent: ${details.intent}</li>
+                            <li>Order ID ${details.id}</li>
+                            <li>Buyer: Name: ${details.payer.name.given_name} ${details.payer.name.surname},
+                                Email: ${details.payer.email_address}</li>
+                        </ul>
+                    `)
+                    console.log(JSON.stringify(details, null, 4));
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+        }).render('#div_min');
+
+    </script>
+}

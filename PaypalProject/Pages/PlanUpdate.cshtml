@@ -1,0 +1,41 @@
+﻿@page
+@model PaypalProject.PlanUpdateModel
+@{
+    ViewData["Title"] = "Update Plan";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Get Plan:</h5>
+<form method="post" asp-page-handler="">
+    <input type="hidden" asp-for="@Model.UpdateStatus" />
+    <input type="hidden" asp-for="@Model.UpdateResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Get Plan</button>
+    </div>
+    @if (Model.GetResult != null)
+    {
+    <p>Get Plan: Status: @Model.GetStatus, Id: @Model.PlanId</p>
+    <textarea style="width:100%;height:100px">@Model.GetResult</textarea>
+    }
+</form>
+
+
+<br />
+<h5>Update Plan:</h5>
+<form method="post" asp-page-handler="UpdatePlan">
+    <input type="hidden" asp-for="@Model.PlanId" />
+    <input type="hidden" asp-for="@Model.GetStatus" />
+    <input type="hidden" asp-for="@Model.GetResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Update Plan</button>
+    </div>
+    @if (Model.UpdateResult != null)
+    {
+    <p>Get Updated Plan: Status: @Model.UpdateStatus, Id: @Model.PlanId</p>
+    <textarea style="width:100%;height:100px">@Model.UpdateResult</textarea>
+    }
+</form>
+
+

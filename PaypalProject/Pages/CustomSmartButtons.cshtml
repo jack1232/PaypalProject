@@ -1,0 +1,60 @@
+﻿@page
+@model PaypalProject.Pages.CustomSmartButtonsModel
+@{
+    ViewData["Title"] = "Customize Smart Buttons";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<h5>Change Color:</h5>
+<div class="row">
+    <div class="col-md-3" id="color_gold">Gold</div>
+    <div class="col-md-3" id="color_blue">Blue</div>
+    <div class="col-md-3" id="color_silver">Silver</div>
+    <div class="col-md-3" id="color_black">Black</div>
+</div>
+<br />
+<h5>Change Label:</h5>
+<div class="row">
+    <div class="col-md-3" id="label_checkout">Checkout</div>
+    <div class="col-md-3" id="label_credit">Paypal</div>
+    <div class="col-md-3" id="label_pay">Pay</div>
+    <div class="col-md-3" id="label_buynow">Buy Now</div>
+</div>
+<br />
+<h5>Test Layout:</h5>
+<div class="row">
+    <div class="col-md-3" id="layout_v">Vertical (Default)</div>
+    <div class="col-md-5" id="layout_h">Horizontal</div>
+</div>
+<br />
+<h5>Change Shape:</h5>
+<div class="row">
+    <div class="col-md-3" id="shape_rect">Rect</div>
+    <div class="col-md-3" id="shape_pill">Pill</div>
+</div>
+
+
+
+
+@section Scripts{
+<script>
+    paypal.Buttons({ style: { color: 'gold' } }).render('#color_gold');
+    paypal.Buttons({ style: { color: 'blue' } }).render('#color_blue');
+    paypal.Buttons({ style: { color: 'silver' } }).render('#color_silver');
+    paypal.Buttons({ style: { color: 'black' } }).render('#color_black');
+
+    paypal.Buttons({ style: { color: 'gold', label: 'checkout' } }).render('#label_checkout');
+    paypal.Buttons({ style: { color: 'blue', label: 'paypal' } }).render('#label_credit');
+    paypal.Buttons({ style: { color: 'silver', label: 'pay' } }).render('#label_pay');
+    paypal.Buttons({ style: { color: 'black', label: 'buynow' } }).render('#label_buynow');
+
+    paypal.Buttons({ style: { layout: 'vertical' } }).render('#layout_v');
+    paypal.Buttons({ style: { layout: 'horizontal' } }).render('#layout_h');
+
+    paypal.Buttons({ style: { shape: 'rect' } }).render('#shape_rect');
+    paypal.Buttons({ style: { shape: 'pill' } }).render('#shape_pill');
+
+</script>
+}
+

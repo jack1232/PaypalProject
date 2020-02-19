@@ -1,0 +1,113 @@
+﻿@page
+@using Newtonsoft.Json
+@model PaypalProject.Pages.ServerTransactionDetailModel
+@{
+    ViewData["Title"] = "Server Transaction with Order Detail";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <h5>Select Products:</h5>
+            <br />
+            <input type="hidden" asp-for="@Model.Input.TotalItemCost" />
+            <input type="hidden" asp-for="@Model.Input.TotalTax" />
+            <input type="hidden" asp-for="@Model.Input.TotalShippingAndHandling" />
+
+            @for (var i = 0; i < Model.Input.Order.PurchaseUnits[0].Items.Count(); i++)
+            {
+                <div style="padding-left:30px">
+                    <input type="hidden" asp-for="@Model.Input.Order.PurchaseUnits[0].Items[i].Name" />
+                    <input type="hidden" asp-for="@Model.Input.Order.PurchaseUnits[0].Items[i].Description" />
+                    <input type="hidden" asp-for="@Model.Input.Order.PurchaseUnits[0].Items[i].Sku" />
+                    <input type="hidden" asp-for="@Model.Input.Order.PurchaseUnits[0].Items[i].Tax.Value" />
+
+                    <label class="control-label">
+                        <b>
+                            Product: @Model.Input.Order.PurchaseUnits[0].Items[i].Name,
+                            Description: @Model.Input.Order.PurchaseUnits[0].Items[i].Description SKU: @Model.Input.Order.PurchaseUnits[0].Items[i].Sku
+                        </b>
+                    </label>
+                    <div class="form-group form-inline">
+                        <label class="control-label">Unit Price:</label>
+                        <input class="form-control m-1" type="text" asp-for="@Model.Input.Order.PurchaseUnits[0].Items[i].UnitAmount.Value" readonly />
+                        <label class="control-label m-1">Quantity:</label>
+                        <input class="form-control m-1" type="text" asp-for="@Model.Input.Quantities[i]" />
+                    </div>
+                </div>
+                <br />
+            }
+            <h5>Shapping, Handling, and Taxes:</h5>
+
+            <div class="form-group form-inline" style="padding-left:30px">
+                <label class="control-label">Shipping:</label>
+                <input class="form-control m-1" type="text" asp-for="@Model.Input.Order.PurchaseUnits[0].AmountWithBreakdown.AmountBreakdown.Shipping.Value" readonly />
+                <label class="control-label m-1">Handling:</label>
+                <input class="form-control m-1" type="text" asp-for="@Model.Input.Order.PurchaseUnits[0].AmountWithBreakdown.AmountBreakdown.Handling.Value" readonly />
+            </div>
+            <div class="form-group form-inline" style="padding-left:30px">
+                <label class="control-label">Shipping Discount:</label>
+                <input class="form-control m-1" type="text" asp-for="@Model.Input.Order.PurchaseUnits[0].AmountWithBreakdown.AmountBreakdown.ShippingDiscount.Value" readonly />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">Update Order</button>
+
+            @if (Model.Input.TotalItemCost > 0)
+            {
+                <h5 style="margin-top:30px">Order Summary</h5>
+                <div class="form-group form-inline" style="padding-left:30px">
+                    <label class="control-label m-1">Product Cost:</label>
+                    <label class="control-label m-1">@Model.Input.TotalItemCost,</label>
+                    <label class="control-label m-1">Total Tax:</label>
+                    <label class="control-label m-1">@Math.Round(Model.Input.TotalTax, 2),</label>
+                    <label class="control-label m-1">S&H:</label>
+                    <label class="control-label m-1">@Math.Round(Model.Input.TotalShippingAndHandling, 2),</label>
+                    <label class="control-label m-1">Total Cost:</label>
+                    <label class="control-label m-1">@Math.Round(Model.Input.TotalCost, 2)</label>
+                </div>
+            }
+            else
+            {
+                <p style="margin-top:30px;color:red">No product selected. Please select products.</p>
+            }
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div id="div_paypal" style="width:20%"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>     
+        var quantities = @Html.Raw(JsonConvert.SerializeObject(Model.Input.Quantities));
+        var q1 = quantities[0];
+        var q2 = quantities[1];       
+
+        paypal.Buttons({
+            createOrder: function () {
+                return fetch(`/api/createorder/capture/${q1}/${q2}`, {
+                    method: 'post'
+                })
+                    .then(function (res) {
+                        return res.json();
+                    }).then(function (data) {
+                        return data.id;
+                    });
+            },
+            onApprove: function (data) {
+                return fetch(`/api/captureorder/${data.orderID}`, {
+                    method: 'post'
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (details) {                   
+                    console.log(JSON.stringify(details, null, 4));
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+        }).render('#div_paypal');
+
+    </script>
+}

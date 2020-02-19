@@ -1,0 +1,37 @@
+﻿@page
+@model PaypalProject.SubscriptionActivateModel
+@{
+    ViewData["Title"] = "Activate Subscription";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Get Subscription:</h5>
+@if (Model.Result != null)
+{
+    <p>Get Subscription: Status: @Model.Status, Id: @Model.SubscriptionId</p>
+    <textarea style="width:100%;height:200px">@Model.Result</textarea>
+}
+
+<br />
+<h5>Activate Subscription:</h5>
+<form method="post">
+    <input type="hidden" asp-for="@Model.Status" />
+    <input type="hidden" asp-for="@Model.Result" />
+    <div class="form-group form-inline">
+        <label class="control-label">Cature ID:</label>
+        <input class="form-control ml-2" type="text" asp-for="@Model.SubscriptionId" />
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Activate Subscription</button>
+    </div>
+    @if (Model.ActivateResult != null)
+    {
+        <p>Activate Subscription: Status: @Model.ActivateStatus, Id: @Model.SubscriptionId</p>
+        <textarea  style="width:100%;height:200px">@Model.ActivateResult</textarea>
+    }
+    else
+    {
+        <p>@Model.ActivateStatus</p>
+    }
+</form>
+

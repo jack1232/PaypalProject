@@ -1,0 +1,43 @@
+﻿@page
+@model PaypalProject.SubscriptionUpdateModel
+@{
+    ViewData["Title"] = "Update Subscription";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Get Subscription:</h5>
+<form method="post" asp-page-handler="">
+    <input type="hidden" asp-for="@Model.UpdateStatus" />
+    <input type="hidden" asp-for="@Model.UpdateResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Get Subscription</button>
+    </div>
+    @if (Model.GetResult != null)
+    {
+        <p>Get Subscription: Status: @Model.GetStatus, Id: @Model.SubscriptionId</p>
+        <textarea style="width:100%;height:200px">@Model.GetResult</textarea>
+    }
+</form>
+
+<br />
+<h5>Update Subscription:</h5>
+<form method="post" asp-page-handler="UpdatePlan">
+    <input type="hidden" asp-for="@Model.SubscriptionId" />
+    <input type="hidden" asp-for="@Model.GetStatus" />
+    <input type="hidden" asp-for="@Model.GetResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Update Subscription</button>
+    </div>
+    @if (Model.UpdateResult != null)
+    {
+        <p>Get Updated Subscription: Status: @Model.UpdateStatus, Id: @Model.SubscriptionId</p>
+        <textarea style="width:100%;height:200px">@Model.UpdateResult</textarea>
+    }
+    else 
+    {
+        <p>@Model.UpdateStatus</p>
+    }
+</form>
+

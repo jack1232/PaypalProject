@@ -1,0 +1,43 @@
+﻿@page
+@model PaypalProject.Pages.ProductCreateModel
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Create Product:</h5>
+<form method="post" asp-page-handler="">
+    <input type="hidden" asp-for="@Model.ListStatus" />
+    <input type="hidden" asp-for="@Model.ListResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Create Product</button>
+    </div>
+    @if (Model.CreateResult != null)
+    {
+        <p>Create product: Status: @Model.CreateStatus, Id: @Model.ProductId</p>
+        <textarea style="width:100%;height:100px">@Model.CreateResult</textarea>
+    }
+</form>
+
+
+<br />
+<h5>List Products:</h5>
+<form method="post" asp-page-handler="ListProduct">
+    <input type="hidden" asp-for="@Model.ProductId" />
+    <input type="hidden" asp-for="@Model.CreateStatus" />
+    <input type="hidden" asp-for="@Model.CreateResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">List Products</button>
+    </div>
+    @if (Model.ListResult != null)
+    {
+        <p>List products: Status: @Model.ListStatus</p>
+        <textarea style="width:100%;height:100px">@Model.ListResult</textarea>
+    }
+</form>
+
+
+
+

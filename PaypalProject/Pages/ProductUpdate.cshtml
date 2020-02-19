@@ -1,0 +1,39 @@
+﻿@page
+@model PaypalProject.Pages.ProductUpdateModel
+@{
+    ViewData["Title"] = "Update Product";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Get Product:</h5>
+<form method="post" asp-page-handler="">
+    <input type="hidden" asp-for="@Model.UpdateStatus" />
+    <input type="hidden" asp-for="@Model.UpdateResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Get Product</button>
+    </div>
+    @if (Model.GetResult != null)
+    {
+        <p>Get product: Status: @Model.GetStatus, Id: @Model.ProductId</p>
+        <textarea style="width:100%;height:100px">@Model.GetResult</textarea>
+    }
+</form>
+
+
+<br />
+<h5>Update Product:</h5>
+<form method="post" asp-page-handler="UpdateProduct">
+    <input type="hidden" asp-for="@Model.ProductId" />
+    <input type="hidden" asp-for="@Model.GetStatus" />
+    <input type="hidden" asp-for="@Model.GetResult" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Update Product</button>
+    </div>
+    @if (Model.UpdateResult != null)
+    {
+        <p>Get Updated Product: Status: @Model.UpdateStatus, Id: @Model.ProductId</p>
+        <textarea style="width:100%;height:100px">@Model.UpdateResult</textarea>
+    }
+</form>

@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@using Microsoft.Extensions.Options
+@using PaypalProject.Models
+@inject IOptions<PaypalApiSetting> pSetting
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PaypalProject</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Home</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Examples
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="padding-left:10px;padding-top:0">
+                                <div class="center-separator" style="margin-top:10px;margin-bottom:10px"><b>Chapter 1</b></div>
+                                <a class="dropdown-item" asp-page="/Employee">Employee Example</a>
+
+                                <div class="center-separator" style="margin-top:10px;margin-bottom:10px"><b>Chapter 3</b></div>
+                                <a class="dropdown-item" asp-page="/RenderSmartButtons">Render Smart Buttons</a>
+                                <a class="dropdown-item" asp-page="/CustomJsSdk">Customize JavaScript SDK</a>
+                                <a class="dropdown-item" asp-page="/CustomSmartButtons">Customize Smart Buttons</a>
+
+                                <div class="center-separator" style="margin-top:10px;margin-bottom:10px"><b>Chapter 4</b></div>
+                                <a class="dropdown-item" asp-page="/JsTransaction">Transaction using JavaScript</a>
+                                <a class="dropdown-item" asp-page="/JsTransactionDetail">Transaction with Order Detials</a>
+
+                                <div class="center-separator" style="margin-top:10px;margin-bottom:10px"><b>Chapter 5</b></div>
+                                <a class="dropdown-item" asp-page="/ServerTransaction">Transaction On Server</a>
+                                <a class="dropdown-item" asp-page="/ServerTransactionDetail">Server Transaction with Order Details</a>
+
+                                <div class="center-separator" style="margin-top:10px;margin-bottom:10px"><b>Chapter 6</b></div>
+                                <a class="dropdown-item" asp-page="/GetTransactionDetail">Get Transaction Details</a>
+                                <a class="dropdown-item" asp-page="/ServerRefund">Refund from Server</a>
+                                <a class="dropdown-item" asp-page="/ServerOrderUpdate">Update Order</a>
+                                <a class="dropdown-item" asp-page="/ServerCaptureAuthorize">Capture Authorization</a>
+
+                                <div class="center-separator" style="margin-top:10px;margin-bottom:10px"><b>Chapter 8</b></div>
+                                <a class="dropdown-item" asp-page="/ProductCreate">Create Product</a>
+                                <a class="dropdown-item" asp-page="/ProductUpdate">Update Product</a>
+                                <a class="dropdown-item" asp-page="/PlanCreate">Create Plan</a>
+                                <a class="dropdown-item" asp-page="/PlanUpdate">Update Plan</a>
+                                <a class="dropdown-item" asp-page="/PlanActivate">Activate and Deactivate Plan</a>
+                                <a class="dropdown-item" asp-page="/SubscriptionCreate">Create Subscription</a>
+                                <a class="dropdown-item" asp-page="/SubscriptionApprove">Approve Subscription</a>
+                                <a class="dropdown-item" asp-page="/SubscriptionButton">Subscription with Smart Buttons</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - PaypalProject - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=@pSetting.Value.ClientID" id="paypal_sdk"></script>
+   
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

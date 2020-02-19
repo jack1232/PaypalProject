@@ -1,0 +1,38 @@
+﻿@page
+@model PaypalProject.SubscriptionApproveModel
+@{
+    ViewData["Title"] = "Approve Subscription";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h5>Get Subscription:</h5>
+@if (Model.Result != null)
+{
+    <p>Subscription: Status: @Model.Status, Id: @Model.SubscriptionId</p>
+    <textarea style="width:100%;height:200px">@Model.Result</textarea>
+}
+<br />
+<br />
+<h5>Get Approve Link for Subscription:</h5>
+
+<form method="post" asp-page-handler="">
+    <input type="hidden" asp-for="@Model.Status" />
+    <input type="hidden" asp-for="@Model.Result" />
+    <input type="hidden" asp-for="@Model.SubscriptionId" />
+    <div class="form-group form-inline">
+        <button type="submit" class="btn btn-primary btn-sm ml-2">Get Approve Link</button>
+    </div>
+
+</form>
+
+@if (!string.IsNullOrEmpty(Model.ApproveLink))
+{
+    <p>Here is the approve linke: @Model.ApproveLink</p>
+
+    <br />
+    <h5>Click on the following button to subscribe:</h5>
+    <a href="@Model.ApproveLink" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Approve Subscription</a>
+}
+

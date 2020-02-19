@@ -1,0 +1,93 @@
+﻿@page
+@using Newtonsoft.Json
+@model PaypalProject.Pages.JsTransactionDetailModel
+@{
+    ViewData["Title"] = "PayPal Transaction with Order Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <h5>Select Products:</h5>
+            <br />
+            <input type="hidden" asp-for="@Model.Input.TotalProductCost" />
+            <input type="hidden" asp-for="@Model.Input.TotalQuantity" />
+
+            @for (var i = 0; i < Model.Input.Products.Count(); i++)
+            {
+                <div style="padding-left:30px">
+                    <input type="hidden" asp-for="@Model.Input.Products[i].Name" />
+                    <input type="hidden" asp-for="@Model.Input.Products[i].Description" />
+                    <input type="hidden" asp-for="@Model.Input.Products[i].SKU" />
+
+                    <label class="control-label">
+                        <b>
+                            Product: @Model.Input.Products[i].Name,
+                            Description: @Model.Input.Products[i].Description SKU: @Model.Input.Products[i].SKU
+                        </b>
+                    </label>
+                    <div class="form-group form-inline">
+                        <label class="control-label">Unit Price:</label>
+                        <input id="price_@Model.Input.Products[i].Name" class="form-control m-1" type="text"
+                               asp-for="@Model.Input.Products[i].UnitPrice" readonly />
+                        <label class="control-label m-1">Quantity:</label>
+                        <input id="quantity_@Model.Input.Products[i].Name" class="form-control m-1" type="text"
+                               asp-for="@Model.Input.Products[i].Quantity" />
+                    </div>
+                </div>
+                <br />
+            }
+            <h5>Shapping, Handling, and Taxes:</h5>
+
+            <div class="form-group form-inline" style="padding-left:30px">
+                <label class="control-label">Shipping:</label>
+                <input id="shipping" class="form-control m-1" type="text" asp-for="@Model.Input.ShippingCost" readonly />
+                <label class="control-label m-1">Handling:</label>
+                <input id="handling" class="form-control m-1" type="text" asp-for="@Model.Input.HandlingCost" readonly />
+            </div>
+            <div class="form-group form-inline" style="padding-left:30px">
+                <label class="control-label">Tax Rate:</label>
+                <input id="taxRate" class="form-control m-1" type="text" asp-for="@Model.Input.TaxRate" readonly />
+                <label class="control-label m-1">Taxable on S&H:</label>
+                <input id="isTaxable" class="form-control m-1" type="text"
+                       asp-for="@Model.Input.isTaxableOnShippingHandling" style="width:150px" readonly />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">Update Order</button>
+
+            @if (Model.Input.TotalQuantity > 0)
+            {
+                <h5 style="margin-top:30px">Order Summary</h5>
+                <div class="form-group form-inline" style="padding-left:30px">
+                    <label class="control-label m-1">Product Cost:</label>
+                    <label id="productCost" class="control-label m-1">@Model.Input.TotalProductCost,</label>
+                    <label class="control-label m-1">Total Tax:</label>
+                    <label id="totalTax" class="control-label m-1">@Math.Round(Model.Input.TotalTax, 2),</label>
+                    <label class="control-label m-1">S&H:</label>
+                    <label id="totalSH" class="control-label m-1">@Math.Round(Model.Input.ShippingAndHandlingCost, 2),</label>
+                    <label class="control-label m-1">Total Cost:</label>
+                    <label id="totalCost" class="control-label m-1">@Math.Round(Model.Input.TotalCost, 2)</label>
+                </div>
+            }
+            else
+            {
+                <p style="margin-top:30px;color:red">No product selected. Please select products.</p>
+            }
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div id="div_paypal" style="width:20%"></div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/jsTransactionDetail.js"></script>
+    <script>
+        let obj = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Input.Products));
+        getItems(obj);        
+    </script>
+}

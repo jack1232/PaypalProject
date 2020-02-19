@@ -1,0 +1,74 @@
+﻿@page
+@model PaypalProject.Pages.ServerCaptureAuthorizeModel
+@{
+    ViewData["Title"] = "Authorize and Capture from Server";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="row">
+    <div class="col-md-4" style="border-right:1px solid lightgray">
+        <h5>Authorize order process:</h5>
+        <br />
+        <div id="div_paypal" style="width:20%"></div>
+        <div id="div_result"></div>
+    </div>
+    <div class="col-md-8">
+        <h5>Capture authorized order:</h5>
+        <br />
+        <form method="post">
+            <div class="form-group form-inline">
+                <label class="control-label">Authorization ID:</label>
+                <input id="authorizeId" class="form-control ml-2" type="text" asp-for="@Model.AuthorizationId" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Capture</button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.ResponseResult))
+        {
+            <br />
+            <h5>Response results:</h5>
+            <textarea style="width:100%;height:300px">@Model.ResponseResult</textarea>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        paypal.Buttons({
+            createOrder: function () {
+                return fetch('/api/createminimumorder/authorize/12.25', {
+                    method: 'post'
+                })
+                    .then(function (res) {
+                        return res.json();
+                    }).then(function (data) {
+                        return data.id;
+                    });
+            },
+            onApprove: function (data) {
+                return fetch(`/api/authorizeorder/${data.orderID}`, {
+                    method: 'post'
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (details) {
+                    $('#authorizeId').val(details.purchase_units[0].payments.authorizations[0].id);
+                    $('#div_result').empty();
+                    $('#div_result').html(`
+                            <h5>Response results:</h5>
+                            <ul>
+                                <li>Status: ${details.status}</li>
+                                <li>Order ID ${details.id}</li>
+                                <li>Authorization ID: ${details.purchase_units[0].payments.authorizations[0].id}
+                                <li>Buyer Name: ${details.payer.name.given_name} ${details.payer.name.surname}</li>
+                                <li>Buyer Email: ${details.payer.email_address}</li>
+                            </ul>
+                        `)
+                    //alert('Authorization created for ' + details.payer.name.given_name);
+                });
+            }
+        }).render('#div_paypal');
+
+    </script>
+}

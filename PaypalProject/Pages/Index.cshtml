@@ -1,0 +1,56 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>Welcome to "Practical PayPal Payment in ASP.NET Core" </h1>
+<h4>This project provides example code for this book</h4>
+<hr />
+
+<h6 style="margin-top:2em">Chapter 1. Overview of ASP.NET Core Razor Pages</h6>
+<ul><li><a href="/employee">Employee Example</a></li></ul>
+
+<h6 style="margin-top:16px">Chapter 2. Set Up PayPal Account</h6>
+
+<h6>Chapter 3. PayPal Smart Payment Buttons</h6>
+<ul>
+    <li><a asp-page="/RenderSmartButtons">Render Smart Buttons</a></li>
+    <li><a asp-page="/CustomJsSdk">Customize JavaScript SDK</a></li>
+    <li><a asp-page="/CustomSmartButtons">Customize Smart Buttons</a></li>
+</ul>
+
+<h6>Chapter 4. Checkout with Smart Payment Buttons</h6>
+<ul>
+    <li><a asp-page="/JsTransaction">Transaction using JavaScript</a></li>
+    <li><a asp-page="/JsTransactionDetail">Transaction with Order Detials</a></li>
+</ul>
+
+<h6>Chapter 5. PayPal Server-Side .NET SDK</h6>
+<ul>
+    <li><a asp-page="/ServerTransaction">Transaction On Server</a></li>
+    <li><a asp-page="/ServerTransactionDetail">Server Transaction with Order Details</a></li>
+</ul>
+
+<h6>Chapter 6. More Features of PayPal .NET SDK</h6>
+<ul>
+    <li><a asp-page="/GetTransactionDetail">Get Transaction Details</a></li>
+    <li><a asp-page="/ServerRefund">Refund from Server</a></li>
+    <li><a asp-page="/ServerOrderUpdate">Update Order</a></li>
+    <li><a asp-page="/ServerCaptureAuthorize">Capture Authorization</a></li>
+</ul>
+
+<h6>Chapter 7. Subscription .NET SDK</h6>
+
+<h6>Chapter 8. Subscription Examples</h6>
+<ul>
+    <li><a asp-page="/ProductCreate">Create Product</a></li>
+    <li><a asp-page="/ProductUpdate">Update Product</a></li>
+    <li><a asp-page="/PlanCreate">Create Plan</a></li>
+    <li><a asp-page="/PlanUpdate">Update Plan</a></li>
+    <li><a asp-page="/PlanActivate">Activate and Deactivate Plan</a></li>
+    <li><a asp-page="/SubscriptionCreate">Create Subscription</a></li>
+    <li><a asp-page="/SubscriptionApprove">Approve Subscription</a></li>
+    <li><a asp-page="/SubscriptionButton">Subscription with Smart Buttons</a></li>
+</ul>
+
