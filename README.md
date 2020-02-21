@@ -16,7 +16,7 @@ You can install it in your .NET or .NET Core applications using the following co
 
 __PM> Install-Package PayPalSubscriptionNetSdk -Version 1.0.0__
 
-## SDK Repository
+### SDK Repository
 
 I publish a PayPal Subscription .NET SDK repository at GitHub:
 
