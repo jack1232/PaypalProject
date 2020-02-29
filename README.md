@@ -29,7 +29,7 @@ To run the projetc, you need to replace teh PayPal ClientId and Secret in the ap
 }
 ```
 
-You can obtain your PayApl ClientID and Secret credentials for the Sandbox account by following teh instruction given in my book. 
+You can obtain your PayPal ClientID and Secret credentials for the Sandbox account by following the instruction given in my book. 
 
 ## Update
 
