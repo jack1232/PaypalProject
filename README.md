@@ -6,6 +6,30 @@ This repository accompanies <a href="https://drxudotnet.com">Practical PayPal In
 
 Download the file as a zip using the green button, or clone the repository to your machine using GIT.
 
+## Run the Project
+
+To run the projetc, you need to replace teh PayPal ClientId and Secret in the appsettings.json file:
+
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "Paypal": {
+    "ApiAppName": "Default Application", 
+    "Account": "your business account",
+    "ClientID": "__your-paypal-clientid__",
+    "Secret": "__your-paypal-secret__"
+  }
+}
+```
+
+You can obtain your PayApl ClientID and Secret credentials for the Sandbox account by following teh instruction given in my book. 
 
 ## Update
 
