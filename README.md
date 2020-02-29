@@ -23,8 +23,8 @@ To run the projetc, you need to replace teh PayPal ClientId and Secret in the ap
   "Paypal": {
     "ApiAppName": "Default Application", 
     "Account": "your business account",
-    "ClientID": "__your-paypal-clientid__",
-    "Secret": "__your-paypal-secret__"
+    "ClientID": "your-paypal-clientid",
+    "Secret": "your-paypal-secret"
   }
 }
 ```
