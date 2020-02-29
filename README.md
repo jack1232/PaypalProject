@@ -8,7 +8,7 @@ Download the file as a zip using the green button, or clone the repository to yo
 
 ## Run the Project
 
-To run the projetc, you need to replace teh PayPal ClientId and Secret in the appsettings.json file:
+To run the projetc, you need to replace the PayPal ClientId and Secret in the appsettings.json file:
 
 ```
 {
